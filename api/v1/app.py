@@ -25,7 +25,7 @@ def page_not_found(error):
     return jsonify('error='Not found'), 404
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     host = getenv('HBNB_API_HOST')
     port = getenv('HBNB_API_PORT')
     if not host:
