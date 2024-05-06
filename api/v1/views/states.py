@@ -12,7 +12,7 @@ from flask import request
 @app_views.route('/status', methods=['GET'] strict_slashes=False)
 def toGet():
     '''getting thing'''
-    objects = storage.all('State')
+    objects = storage.all(State)
     lista = []
     for state in objects.values():
         lista.append(state.to_dict())
@@ -23,7 +23,7 @@ def toGet():
                  strict_slashes=False)
 def toGetid():
     '''Updates a State object id'''
-    objects = storage.get('State', 'state_id')
+    objects = storage.get(State, 'state_id')
     if objects is None:
         abort(404)
     return jsonify(objects.to_dict()), 'OK'
@@ -41,7 +41,7 @@ def posting():
     stateObject = State(name=response['name'])
     storage.new(stateObject)
     storage.save()
-    return jsonify(stateObject.to_dict()), '201'
+    return jsonify(stateObject.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'],
@@ -59,7 +59,7 @@ def putinV():
         if key not in ignoreKeys:
             setattr(stateObject, key)
     storage.save()
-    return jsonify(stateObject.to_dict()), '200'
+    return jsonify(stateObject.to_dict()), 200
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -71,4 +71,4 @@ def deleting():
         abort(404)
     storage.delete(stateObject)
     storage.save()
-    return jsonify({}), '200'
+    return jsonify({}), 200
